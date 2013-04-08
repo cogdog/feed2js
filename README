@@ -1,0 +1,11 @@
+README
+
+This directory contains the latest release of the Feed2JS source code.
+
+This information is for web site owners that would like to incorporate  Feed2JS technology on their own site.
+
+This is provided as open-source under a GNU General Public License.
+
+To run Feed2JS, you need a web server capable of running PHP. You will need to FTP files to your server, perhaps change permissions, and make some basic edits to configure it for your system. 
+
+I give you this code, getting it to work is on your shoulders. 
