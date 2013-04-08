@@ -24,7 +24,7 @@
 	
    ------------- small print ---------------------------------------
 	GNU General Public License 
-	Copyright (C) 2004-2010 Alan Levine
+	Copyright (C) 2004-2013 Alan Levine
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
 	as published by the Free Software Foundation; either version 2
