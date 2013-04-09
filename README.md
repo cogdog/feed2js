@@ -15,6 +15,7 @@ https://github.com/cogdog/feed2js
 Feed2JS makes use of the Magpie RSS parser from
 http://magpierss.sourceforge.net/
 
+### License
 > GNU General Public License 
 > Copyright (C) 2004-2013 Alan Levine
 > This program is free software; you can redistribute it and/or
@@ -51,8 +52,9 @@ The files provided include:
 *   style.php - a version of our style tool which will allow your web site users to select and modify CSS styles for their feeds.
 
 
-Directory structure:
+### Directory structure
 
+```
 (main server directory)
 
 /feed2js
@@ -69,6 +71,7 @@ Directory structure:
 	rss_utils.inc
 	/cache
 	/cache-utf8
+```
 	
 The "extlib" directory contains the a library file required by magpie "Snoopy.class.inc".
 
