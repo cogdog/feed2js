@@ -15,6 +15,7 @@ https://github.com/cogdog/feed2js
 Feed2JS makes use of the Magpie RSS parser from
 http://magpierss.sourceforge.net/
 
+### License
 > GNU General Public License 
 > Copyright (C) 2004-2013 Alan Levine
 > This program is free software; you can redistribute it and/or
