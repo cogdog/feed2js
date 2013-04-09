@@ -52,8 +52,9 @@ The files provided include:
 *   style.php - a version of our style tool which will allow your web site users to select and modify CSS styles for their feeds.
 
 
-Directory structure:
+### Directory structure
 
+```
 (main server directory)
 
 /feed2js
@@ -70,6 +71,7 @@ Directory structure:
 	rss_utils.inc
 	/cache
 	/cache-utf8
+```
 	
 The "extlib" directory contains the a library file required by magpie "Snoopy.class.inc".
 
