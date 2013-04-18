@@ -159,7 +159,7 @@ if  (!$rss) {
 	
 	} elseif ($chan == 'title') {
 		// output title only
-		$str.= "<p class=\"rss-title\"><a class=\"rss-title\" href=\"" . trim($rss->channel['link']) . '"' . $target_window . ">" . strip_returns($rss->channel['title']) . "</a></p>\n";
+		$str.= "<p class=\"rss-title\">" . strip_returns($rss->channel['title'])  . "</p>\n";
 	
 	}	
 

@@ -1,7 +1,7 @@
 <?php
 /*  Feed2JS : RSS feed to JavaScript src file
 
-	VERSION 2.32 
+	VERSION 2.33 
 	
 	ABOUT
 	This PHP script will take an RSS feed as a value of src="...."
@@ -186,7 +186,7 @@ if (isset($restrict_url) && substr($src_host, strlen($src_host)-strlen($restrict
 		
 		} elseif ($chan == 'title') {
 			// output title only
-			$str.= "document.write('<p class=\"rss-title\"><a class=\"rss-title\" href=\"" . trim($rss->channel['link']) . '"' . $target_window . ">" . addslashes(strip_returns($rss->channel['title'])) . "</a></p>');\n";
+			$str.= "document.write('<p class=\"rss-title\">" . addslashes(strip_returns($rss->channel['title'])) . "</p>');\n";
 		
 		}	
 		
