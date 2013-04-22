@@ -96,10 +96,14 @@ function query_str(form) {
 	// so we can open a preview in a new window
 	options = encodeURIComponent(form.src.value);
 		
-	if (form.chan[2].checked) {
+	if (form.chan[4].checked) {
 		options += '&chan=n';
-	} else if (form.chan[1].checked) {
+	} else if (form.chan[3].checked) {
+		options += '&chan=titlelinkno';
+	} else if (form.chan[2].checked) {
 		options += '&chan=title';
+	} else if (form.chan[1].checked) {
+		options += '&chan=linkno';
 	}
 	
 	if (form.num.value != 0) options += '&num=' + form.num.value;
@@ -178,8 +182,12 @@ function query_str(form) {
 </div>
 
 
-<p><strong>Show channel?</strong> (yes/no/title) Display information about the publisher of the feed (yes=show the title and description; title= display title only, no=do not display anything) <br>
-<input type="radio" name="chan" value="y" <?php if ($chan=='y') echo 'checked="checked"'?> /> yes <input type="radio" name="chan" value="title" <?php if ($chan=='title') echo 'checked="checked"'?>/> title <input type="radio" name="chan" value="n" <?php if ($chan=='n') echo 'checked="checked"'?>/> no</p>
+<p><strong>Show channel?</strong> (yes/linkno/title/titlelinkno/no) Display title and/or description about the publisher of the feed and display link or not (yes=show the title and description; title= display title only, no=do not display anything) <br>
+<input type="radio" name="chan" value="y" <?php if ($chan=='y') echo 'checked="checked"'?> /> title w/ description 
+<input type="radio" name="chan" value="linkno" <?php if ($chan=='linkno') echo 'checked="checked"'?> /> title not linked w/ description 
+<input type="radio" name="chan" value="title" <?php if ($chan=='title') echo 'checked="checked"'?>/> title only 
+<input type="radio" name="chan" value="titlelinkno" <?php if ($chan=='titlelinkno') echo 'checked="checked"'?>/> title only not linked
+<input type="radio" name="chan" value="n" <?php if ($chan=='n') echo 'checked="checked"'?>/> no</p>
 
 <p><strong>Number of items to display.</strong> Enter the number of items to be displayed (enter 0 to show all available)<br>
 <input type="text" name="num" size="10" value="<?php echo $num?>"></p>

@@ -1,7 +1,7 @@
 <?php
 /*  Feed2JS : RSS feed to JavaScript src file
 
-	VERSION 2.33 
+	VERSION 2.34
 	
 	ABOUT
 	This PHP script will take an RSS feed as a value of src="...."
@@ -181,14 +181,21 @@ if (isset($restrict_url) && substr($src_host, strlen($src_host)-strlen($restrict
 		// we have a feed, so let's process
 		if ($chan == 'y') {
 		
-			// output channel title and description	
+			// output channel title linked and description	
 			$str.= "document.write('<p class=\"rss-title\"><a class=\"rss-title\" href=\"" . trim($rss->channel['link']) . '"' . $target_window . ">" . addslashes(strip_returns($rss->channel['title'])) . "</a><br /><span class=\"rss-item\">" . addslashes(strip_returns(strip_tags($rss->channel['description']))) . "</span></p>');\n";
 		
 		} elseif ($chan == 'title') {
-			// output title only
+			// output title only with link
+			$str.= "document.write('<p class=\"rss-title\"><a class=\"rss-title\" href=\"" . trim($rss->channel['link']) . '"' . $target_window . ">" . addslashes(strip_returns($rss->channel['title'])) . "</a></p>');\n";
+			
+		} elseif ($chan == 'titlelinkno') {
+			// output title only with no link
 			$str.= "document.write('<p class=\"rss-title\">" . addslashes(strip_returns($rss->channel['title'])) . "</p>');\n";
 		
-		}	
+		}  elseif ($chan == 'linkno') {
+			// output title and descript only with no link
+			$str.= "document.write('<p class=\"rss-title\">" . addslashes(strip_returns($rss->channel['title'])) . "<br /><span class=\"rss-item\">" . addslashes(strip_returns(strip_tags($rss->channel['description']))) . "</span></p>');\n";
+		}
 		
 		// begin item listing
 		$str.= "document.write('<ul class=\"rss-items\">');\n";

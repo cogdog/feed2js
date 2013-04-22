@@ -17,7 +17,7 @@
 	See http://feed2js.org/index.php?s=php
 		
 	CODE:
-	https://github.com/cogdog/feed2js
+	http://code.google.com/p/feed2js/
 
 	
 	This makes use of the Magpie RSS parser from
@@ -152,16 +152,25 @@ if  (!$rss) {
 	$str.= "<p class=\"rss-item\"><em>Error:</em> Feed failed! Causes may be (1) No data  found for RSS feed $src; (2) There are no items are available for this feed; (3) The RSS feed does not validate.<br /><br /> Please verify that the URL <a href=\"$src\">$src</a> works first in your browser and that the feed passes a <a href=\"http://feedvalidator.org/check.cgi?url=" . urlencode($src) . "\">validator test</a>.</p>\n";
 } else {
 
-	if ($chan == 'y') {
+		// we have a feed, so let's process
+		if ($chan == 'y') {
+		
+			// output channel title linked and description	
+			$str.= "document.write('<p class=\"rss-title\"><a class=\"rss-title\" href=\"" . trim($rss->channel['link']) . '"' . $target_window . ">" . strip_returns($rss->channel['title']) . "</a><br /><span class=\"rss-item\">" . strip_returns(strip_tags($rss->channel['description'])) . "</span></p>');\n";
+		
+		} elseif ($chan == 'title') {
+			// output title only with link
+			$str.= "document.write('<p class=\"rss-title\"><a class=\"rss-title\" href=\"" . trim($rss->channel['link']) . '"' . $target_window . ">" . strip_returns($rss->channel['title']) . "</a></p>');\n";
+			
+		} elseif ($chan == 'titlelinkno') {
+			// output title only with no link
+			$str.= "document.write('<p class=\"rss-title\">" . strip_returns($rss->channel['title']) . "</p>');\n";
+		
+		}  elseif ($chan == 'linkno') {
+			// output title and descript only with no link
+			$str.= "document.write('<p class=\"rss-title\">" . strip_returns($rss->channel['title']) . "<br /><span class=\"rss-item\">" . strip_returns(strip_tags($rss->channel['description'])) . "</span></p>');\n";
+		}
 	
-		// output channel title and description	
-		$str.= "<p class=\"rss-title\"><a class=\"rss-title\" href=\"" . trim($rss->channel['link']) . '"' . $target_window . ">" . strip_returns($rss->channel['title']) . "</a><br /><span class=\"rss-item\">" . strip_returns(strip_tags($rss->channel['description'])) . "</span></p>\n";
-	
-	} elseif ($chan == 'title') {
-		// output title only
-		$str.= "<p class=\"rss-title\">" . strip_returns($rss->channel['title'])  . "</p>\n";
-	
-	}	
 
 	
 	// begin item listing
