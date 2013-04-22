@@ -39,6 +39,11 @@ define('MAGPIE_CACHE_AGE', 60*60);
 $date_format = "F d, Y h:i:s a";
 
 
+// default timezone for your instance, can override server setting
+// see http://www.php.net/manual/en/timezones.php
+
+date_default_timezone_set('America/Los_Angeles');
+
 // server time zone offset from GMT
 // If this line generates errors (common on Windoze servers,
 //   then figure out your time zone offset from GMT and enter
