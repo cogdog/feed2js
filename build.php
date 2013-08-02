@@ -35,14 +35,6 @@
 	$rss_box_id = (isset($_GET['rss_box_id'])) ? $_GET['rss_box_id'] : '';
 	$pc = (isset($_GET['pc'])) ? $_GET['pc'] : 'n';
 
-
-// test for malicious use of script tages
-if (strpos($src, '<script>')) {
-	$src = preg_replace("/(\<script)(.*?)(script>)/si", "SCRIPT DELETED", "$src");
-	die("Warning! Attempt to inject javascript detected. Aborted and tracking log updated.");
-}
-	
-
 // check for status of submit buttons	
 	$generate = (isset($_GET['generate'])) ? $_GET['generate'] : '';
 	if (isset($generate)) $generate = $_GET['generate'];
@@ -73,6 +65,17 @@ if (strpos($src, '<script>')) {
 	
 if ($generate) {
 	// URLs for a preview or a generated feed link
+	
+	// trap for missing src param for the feed, use a dummy one so it gets displayed.
+	if (!$src or strpos($src, 'http://') !==0) die('Feed URL missing, incomplete, or not valid. Must start with http:// and be a valid URL');
+
+
+	// test for malicious use of script tages
+	if (strpos($src, '<script>')) {
+		$src = preg_replace("/(\<script)(.*?)(script>)/si", "SCRIPT DELETED", "$src");
+		die("Warning! Attempt to inject javascript detected. Aborted and tracking log updated.");
+	}
+
 	
 		$my_dir = 'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']);
 		

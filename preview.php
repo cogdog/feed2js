@@ -1,18 +1,4 @@
 <?php
-/* ----------------------------------------------------------------------------
-Feed2JS Preview Generator
-
-Creates preview of a feed's output, one day this ought to be sprinkled with
-Ajax.
-
-Code site
-https://github.com/cogdog/feed2js
-
-
-
----------------------------------------------------------------------------- */
-
-
 // access configuration settings
 require_once('feed2js_config.php');
 
@@ -39,6 +25,10 @@ if (strpos($src, '<script>')) {
 	$src = preg_replace("/(\<script)(.*?)(script>)/si", "SCRIPT DELETED", "$src");
 	die("Warning! Attempt to inject javascript detected. Aborted and tracking log updated.");
 }
+
+// trap for missing src param for the feed, use a dummy one so it gets displayed.
+if (!$src or strpos($src, 'http://') !==0) die('Feed URL missing, incomplete, or not valid. Must start with http:// and be a valid URL');
+
 
 // update to full descriptions for html turned on	
 if ($html=='a') $desc = 0;

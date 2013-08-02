@@ -42,7 +42,7 @@ $date_format = "F d, Y h:i:s a";
 // default timezone for your instance, can override server setting
 // see http://www.php.net/manual/en/timezones.php
 
-date_default_timezone_set('America/Los_Angeles');
+date_default_timezone_set('America/New_York');
 
 // server time zone offset from GMT
 // If this line generates errors (common on Windoze servers,
@@ -56,9 +56,10 @@ $tz_offset = gmmktime(0,0,0,1,1,1970) - mktime(0,0,0,1,1,1970);
 // Report all errors except E_NOTICE
 // This is the default value set in php.ini for Apache but often not Windows
 // We recommend changing the value to 0 once your scripts are working
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL^ E_NOTICE);
 
+//ini_set('error_reporting', E_ALL^ E_NOTICE);
+
+error_reporting(0);
 
 // Restrict RSS url to domain
 // Example: www.example.org => allows www.example.org and mywww.example.org
