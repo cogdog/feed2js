@@ -82,7 +82,7 @@ class Snoopy
 												// has permission to write to.
 												// under Windows, this should be C:\temp
 
-	var	$curl_path		=	"/usr/local/bin/curl";
+	var	$curl_path		=	"/usr/bin/curl";
 												// Snoopy will use cURL for fetching
 												// SSL content if a full system path to
 												// the cURL binary is supplied here.
@@ -94,6 +94,8 @@ class Snoopy
 												// as these functions are not stable
 												// as of this Snoopy release.
 	
+	// send Accept-encoding: gzip?
+	var $use_gzip		= true;	
 	/**** Private variables ****/	
 	
 	var	$_maxlinelen	=	4096;				// max line length (headers)
@@ -713,13 +715,13 @@ class Snoopy
 							chr(176),
 							chr(39),
 							chr(128),
-							"ä",
-							"ö",
-							"ü",
-							"Ä",
-							"Ö",
-							"Ü",
-							"ß",
+							"Ã¤",
+							"Ã¶",
+							"Ã¼",
+							"Ã„",
+							"Ã–",
+							"Ãœ",
+							"ÃŸ",
 						);
 					
 		$text = preg_replace($search,$replace,$document);
@@ -789,12 +791,25 @@ class Snoopy
 			$headers .= "User-Agent: ".$this->agent."\r\n";
 		if(!empty($this->host) && !isset($this->rawheaders['Host'])) {
 			$headers .= "Host: ".$this->host;
-			if(!empty($this->port))
+			if(!empty($this->port) && $this->port != '80')
 				$headers .= ":".$this->port;
 			$headers .= "\r\n";
 		}
 		if(!empty($this->accept))
 			$headers .= "Accept: ".$this->accept."\r\n";
+		if($this->use_gzip) {
+			// make sure PHP was built with --with-zlib
+			// and we can handle gzipp'ed data
+			if ( function_exists(gzinflate) ) {
+			   $headers .= "Accept-encoding: gzip\r\n";
+			}
+			else {
+			   trigger_error(
+			   	"use_gzip is on, but PHP was built without zlib support.".
+				"  Requesting file(s) without gzip encoding.", 
+				E_USER_NOTICE);
+			}
+		}
 		if(!empty($this->referer))
 			$headers .= "Referer: ".$this->referer."\r\n";
 		if(!empty($this->cookies))
@@ -845,7 +860,10 @@ class Snoopy
 		
 		$this->_redirectaddr = false;
 		unset($this->headers);
-						
+		
+		// content was returned gzip encoded?
+		$is_gzipped = false;
+		
 		while($currentHeader = fgets($fp,$this->_maxlinelen))
 		{
 			if ($this->read_timeout > 0 && $this->_check_timeout($fp))
@@ -885,7 +903,11 @@ class Snoopy
                 }				
 				$this->response_code = $currentHeader;
 			}
-				
+			
+			if (preg_match("/Content-Encoding: gzip/", $currentHeader) ) {
+				$is_gzipped = true;
+			}
+			
 			$this->headers[] = $currentHeader;
 		}
 
@@ -897,7 +919,14 @@ class Snoopy
     		}
     		$results .= $_data;
 		} while(true);
-
+		
+		// gunzip
+		if ( $is_gzipped ) {
+			// per http://www.php.net/manual/en/function.gzencode.php
+			$results = substr($results, 10);
+			$results = gzinflate($results);
+		}
+		
 		if ($this->read_timeout > 0 && $this->_check_timeout($fp))
 		{
 			$this->status=-100;
@@ -1006,8 +1035,7 @@ class Snoopy
 		
 		$headerfile = tempnam($temp_dir, "sno");
 
-		exec($this->curl_path." -k -D \"$headerfile\"".$cmdline_params."
-".escapeshellarg($URI),$results,$return);
+		exec($this->curl_path." -k -D \"$headerfile\"".$cmdline_params." ".escapeshellarg($URI),$results,$return);
 		
 		if($return)
 		{
@@ -1047,7 +1075,13 @@ class Snoopy
 			}
 		
 			if(preg_match("|^HTTP/|",$result_headers[$currentHeader]))
-				$this->response_code = $result_headers[$currentHeader];
+			{
+			    $this->response_code = $result_headers[$currentHeader];
+			    if(preg_match("|^HTTP/[^\s]*\s(.*?)\s|",$this->response_code, $match))
+			    {
+				$this->status= $match[1];
+                	    }
+			}
 
 			$this->headers[] = $result_headers[$currentHeader];
 		}
