@@ -5,7 +5,7 @@
  * Snoopy - the PHP net client
  * Author: Monte Ohrt <monte@ohrt.com>
  * Copyright (c): 1999-2014, all rights reserved
- * Version: 1.33-dev
+ * Version: 2.00
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -248,7 +248,7 @@ class Snoopy
 
                     if ($this->_redirectaddr) {
                         /* url was redirected, check if we've hit the max depth */
-                        if ($this->maxredirs > $this->_reodirectdepth) {
+                        if ($this->maxredirs > $this->_redirectdepth) {
                             if (!preg_match("|^" . $URI_PARTS["scheme"] . "://|", $this->_redirectaddr))
                                 $this->_redirectaddr = $this->_expandlinks($this->_redirectaddr, $URI_PARTS["scheme"] . "://" . $URI_PARTS["host"]);
 
