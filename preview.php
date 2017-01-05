@@ -27,8 +27,8 @@ if (strpos($src, '<script>')) {
 }
 
 // trap for missing src param for the feed, use a dummy one so it gets displayed.
-if (!$src or strpos($src, 'http://') !==0) die('Feed URL missing, incomplete, or not valid. Must start with http:// and be a valid URL');
-
+if (!$src or (strpos($src, 'http://') !==0 and strpos($src, 'https://') !==0))
+	die('Feed URL missing, incomplete, or not valid. Must start with http:// or https:// and be a valid URL');
 
 // update to full descriptions for html turned on	
 if ($html=='a') $desc = 0;
