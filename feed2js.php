@@ -45,7 +45,9 @@ $script_msg = '';
 $src = (isset($_GET['src'])) ? $_GET['src'] : '';
 
 // trap for missing src param for the feed, use a dummy one so it gets displayed.
-if (!$src or strpos($src, 'http://')!=0) $src=  'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) . '/nosource.php';
+if (!$src or
+	(strpos($src, 'http://') !==0 and strpos($src, 'https://') !==0))
+	$src=  'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) . '/nosource.php';
 
 // test for malicious use of script tages
 if (strpos($src, '<script>')) {
