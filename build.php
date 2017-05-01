@@ -171,7 +171,7 @@ function query_str(form) {
 
 <form method="get" action="build.php"  name="builder">
 
-<p><strong>URL</strong> Enter the web address of the RSS Feed (must be in http:// format, not feed://)<br>
+<p><strong>URL</strong> Enter the web address of the RSS Feed (must be in http:// or https:// format, not feed://)<br>
 
 <input type="text" name="src" size="50" value="<?php echo $src?>"> <br>
 <span style="font-size:x-small">Note: Please verify the URL of your feed (make sure it presents raw RSS) and <a href="http://feedvalidator.org/" onClick="window.open('http://feedvalidator.org/check.cgi?url=' + encodeURIComponent(document.builder.src.value), 'check'); return false;">check that it is valid</a>  before using this form.</span>
