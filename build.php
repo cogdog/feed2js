@@ -68,7 +68,7 @@ if ($generate) {
 	
 	// trap for missing src param for the feed, use a dummy one so it gets displayed.
 	if (!$src or
-	    (strpos($src, 'http://') !==0 and strpos($src, 'https://') !==0))
+	    (strpos($src, '//') !==0 and strpos($src, 'https://') !==0))
 		die('Feed URL missing, incomplete, or not valid. Must start with http:// or https:// and be a valid URL');
 
 
