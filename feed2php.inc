@@ -205,6 +205,9 @@ if  (!$rss) {
 		} elseif  ($item['guid']) {
 			//  feeds lacking item -> link
 			$my_url = ($item['guid']);
+		} else {	
+			// nothing to link to
+			$my_url = false;
 		}
 		
 		
@@ -218,14 +221,20 @@ if  (!$rss) {
 			// create a title attribute. thanks Seb! 
 			$title_str = substr(strip_returns(htmlspecialchars(strip_tags($item['summary']))), 0, 60) . '...'; 
 
-			// write the item with a title attribute
-			$str.= "<li class=\"rss-item\"><a class=\"rss-item\" href=\"" . trim($my_url) . "\"  title=\"$title_str\"" . $target_window . ">" . $my_title . '</a> ' . $author_str . "<br />\n";
+			if ($my_url) {
+				// write the item with a title attribute
+				$str.= "<li class=\"rss-item\"><a class=\"rss-item\" href=\"" . trim($my_url) . "\"  title=\"$title_str\"" . $target_window . ">" . $my_title . '</a> ' . $author_str . "<br />\n";
+			} else {
+				$str.= "<li class=\"rss-item\">" . $my_title . ' ' . $author_str . "<br />\n";
+			}
 			
 
 		} else {
 			// if no title, build a link to tag on the description
 			$str.= "<li class=\"rss-item\">\n";
-			$more_link = " <a class=\"rss-item\" href=\"" .trim($my_url) . '"' . $target_window . ">&laquo;details&raquo;</a>";
+			if ($my_url) {
+				$more_link = " <a class=\"rss-item\" href=\"" .trim($my_url) . '"' . $target_window . ">&laquo;details&raquo;</a>";
+			}
 		}
 
 	

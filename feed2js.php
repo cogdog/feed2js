@@ -45,9 +45,7 @@ $script_msg = '';
 $src = (isset($_GET['src'])) ? $_GET['src'] : '';
 
 // trap for missing src param for the feed, use a dummy one so it gets displayed.
-if (!$src or
-	(strpos($src, 'http://') !==0 and strpos($src, 'https://') !==0))
-	$src=  'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) . '/nosource.php';
+if (!$src or strpos($src, 'http://')!=0) $src=  'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) . '/nosource.php';
 
 // test for malicious use of script tages
 if (strpos($src, '<script>')) {
@@ -240,6 +238,9 @@ if (isset($restrict_url) && substr($src_host, strlen($src_host)-strlen($restrict
 			} elseif  ($item['guid']) {
 				//  feeds lacking item -> link
 				$my_url = ($item['guid']);
+			} else {	
+				// nothing to link to
+				$my_url = false;
 			}
 			
 			
@@ -253,13 +254,24 @@ if (isset($restrict_url) && substr($src_host, strlen($src_host)-strlen($restrict
 							
 	
 				// write the title strng
-				$str.= "document.write('<li class=\"rss-item\"><a class=\"rss-item\" href=\"" . trim($my_url) . "\"" . $target_window . '>' . $my_title . '</a>' .  $author_str . "<br />');\n";
+				
+				if ($my_url) {
+					// link title
+					$str.= "document.write('<li class=\"rss-item\"><a class=\"rss-item\" href=\"" . trim($my_url) . "\"" . $target_window . '>' . $my_title . '</a>' .  $author_str . "<br />');\n";
+				} else {
+					// no link
+					$str.= "document.write('<li class=\"rss-item\">" . $my_title . ' ' .  $author_str . "<br />');\n";
+				}
 	
 	
 			} else {
-				// if no title, build a link to tag on the description
+				
 				$str.= "document.write('<li class=\"rss-item\">');\n";
-				$more_link = " <a class=\"rss-item\" href=\"" . trim($my_url) . '"' . $target_window . ">&laquo;details&raquo;</a>";
+				
+				if ($my_url) {
+					// if no title, build a link to tag on the description
+					$more_link = " <a class=\"rss-item\" href=\"" . trim($my_url) . '"' . $target_window . ">&laquo;details&raquo;</a>";
+				}
 			}
 		
 			// print out date if option indicated
