@@ -148,6 +148,8 @@ $str = "<div class=\"rss-box" . $rss_box_id . "\">\n";
 
 // no feed found by magpie, return error statement
 if  (!$rss) {
+	$src = htmlspecialchars($src);
+	
 	// error, nothing grabbed
 	$str.= "<p class=\"rss-item\"><em>Error:</em> Feed failed! Causes may be (1) No data  found for RSS feed $src; (2) There are no items are available for this feed; (3) The RSS feed does not validate.<br /><br /> Please verify that the URL <a href=\"$src\">$src</a> works first in your browser and that the feed passes a <a href=\"http://feedvalidator.org/check.cgi?url=" . urlencode($src) . "\">validator test</a>.</p>\n";
 } else {

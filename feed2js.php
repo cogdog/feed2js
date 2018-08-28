@@ -47,7 +47,7 @@ $src = (isset($_GET['src'])) ? $_GET['src'] : '';
 // trap for missing src param for the feed, use a dummy one so it gets displayed.
 if (!$src or strpos($src, 'http://')!=0) $src=  'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) . '/nosource.php';
 
-// test for malicious use of script tages
+// test for malicious use of script tags
 if (strpos($src, '<script>')) {
 	$src = preg_replace("/(\<script)(.*?)(script>)/si", "SCRIPT DELETED", "$src");
 	die("Warning! Attempt to inject javascript detected. Aborted and tracking log updated.");
@@ -154,6 +154,8 @@ if (isset($restrict_url)) {
 	}
 }
 if (isset($restrict_url) && substr($src_host, strlen($src_host)-strlen($restrict_url)) != $restrict_url) {
+	$src = htmlspecialchars($src);
+	
 	$str.= "document.write('<div class=\"rss-box" . $rss_box_id .
 		"\"><p class=\"rss-item\"><em>Error:</em> on feed <strong>" .
 		$src . "</strong>. " .
@@ -172,6 +174,9 @@ if (isset($restrict_url) && substr($src_host, strlen($src_host)-strlen($restrict
 	
 	// no feed found by magpie, return error statement
 	if  (!$rss) {
+		//$src needs to be escape before being displayed as an error message, in order to prevent XSS 
+		$src = htmlspecialchars($src);
+		
 		$str.= "document.write('<p class=\"rss-item\">$script_msg<em>Error:</em> Feed failed! Causes may be (1) No data  found for RSS feed $src; (2) There are no items are available for this feed; (3) The RSS feed does not validate.<br /><br /> Please verify that the URL <a href=\"$src\">$src</a> works first in your browser and that the feed passes a <a href=\"http://feedvalidator.org/check.cgi?url=" . urlencode($src) . "\">validator test</a>.</p></div>');\n";
 	
 	
