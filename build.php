@@ -79,7 +79,7 @@ if ($generate) {
 	}
 
 	
-		$my_dir = 'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']);
+		$my_dir = 'https://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']);
 		
 		$rss_str = "$my_dir/feed2js.php?src=" . urlencode($src) . $options . $html_options;
 
