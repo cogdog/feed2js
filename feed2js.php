@@ -1,7 +1,7 @@
 <?php
 /*  Feed2JS : RSS feed to JavaScript src file
 
-	VERSION 2.34
+	VERSION 2.5
 	
 	ABOUT
 	This PHP script will take an RSS feed as a value of src="...."
@@ -13,7 +13,7 @@
 	Developed by Alan Levine initially released 13.may.2004
 	http://cogdogblog.com/
 	
-	PRIMARY SITE (though June 2013):
+	PRIMARY SITE:
 	http://feed2js.org/
 	 
 	CODE:

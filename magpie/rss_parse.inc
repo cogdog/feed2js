@@ -325,6 +325,8 @@ class MagpieRSS {
     }
     
     function concat (&$str1, $str2="") {
+    
+    	
         if (!isset($str1) ) {
             $str1="";
         }

@@ -628,8 +628,8 @@ class Snoopy
         $headers = $http_method . " " . $url . " " . $this->_httpversion . "\r\n";
         if (!empty($this->host) && !isset($this->rawheaders['Host'])) {
             $headers .= "Host: " . $this->host;
-            if (!empty($this->port) && $this->port != '80')
-                $headers .= ":" . $this->port;
+//            if (!empty($this->port) && $this->port != '80')
+//                $headers .= ":" . $this->port;
             $headers .= "\r\n";
         }
         if (!empty($this->agent))
