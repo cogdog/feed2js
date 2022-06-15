@@ -50,7 +50,7 @@ if (!$src or strpos($src, 'http://')!=0) $src=  'http://' . $_SERVER['SERVER_NAM
 // Filter for malicious use of <script> and related tags. Uses https://www.php.net/manual/en/filter.filters.validate.php, requiring PHP7 or later
 $src = filter_var($src,FILTER_VALIDATE_URL,FILTER_FLAG_PATH_REQUIRED);
 //disasemble src into component parts
-$parsed_url_src = parse_url($src,-1);
+$parsed_url_src = parse_url($src);
 //Re-asemble src, currently only works with absolute URLs
 $src = $parsed_url_src['scheme'].'://'.filter_var($parsed_url_src['host'],FILTER_VALIDATE_DOMAIN).strip_tags($parsed_url_src['path']);
 
