@@ -47,11 +47,12 @@ $src = (isset($_GET['src'])) ? $_GET['src'] : '';
 // trap for missing src param for the feed, use a dummy one so it gets displayed.
 if (!$src or strpos($src, 'http://')!=0) $src=  'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) . '/nosource.php';
 
-// test for malicious use of script tags
-if (strpos($src, '<script>')) {
-	$src = preg_replace("/(\<script)(.*?)(script>)/si", "SCRIPT DELETED", "$src");
-	die("Warning! Attempt to inject javascript detected. Aborted and tracking log updated.");
-}
+// Filter for malicious use of <script> and related tags. Uses https://www.php.net/manual/en/filter.filters.validate.php, requiring PHP7 or later
+$src = filter_var($src,FILTER_VALIDATE_URL,FILTER_FLAG_PATH_REQUIRED);
+//disasemble src into component parts
+$parsed_url_src = parse_url($src,-1);
+//Re-asemble src, currently only works with absolute URLs
+$src = $parsed_url_src['scheme'].'://'.filter_var($parsed_url_src['host'],FILTER_VALIDATE_DOMAIN).strip_tags($parsed_url_src['path']);
 
 // MAGPIE  SETUP ----------------------------------------------------
 // access configuration settings
