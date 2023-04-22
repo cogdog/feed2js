@@ -5,7 +5,7 @@ by Alan Levine https://cogdogblog.com/
 
 This directory contains likely the last of Feed2JS source code. It's still running as a free public service at http://feed2js.org but it barely works and is not maintained. 
 
-Most feeds will report error messages about it being invalid, this is the result of the ancient RSS parser not returning results. As of April 22, 2023 I am declaring it dead.
+Most feeds will report error messages about it being invalid, this is the result of the ancient RSS parser not returning results. As of April 22, 2023 [I am declaring it dead](https://cogdogblog.com/2023/04/calling-feed2js-time-of-death/).
 
 
 I am sorry but making this code work is beyond my abilities.
