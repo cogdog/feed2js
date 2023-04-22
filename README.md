@@ -5,7 +5,8 @@ by Alan Levine https://cogdogblog.com/
 
 This directory contains likely the last of Feed2JS source code. It's still running as a free public service at http://feed2js.org but it barely works and is not maintained. 
 
-Most feeds will report error messages about it being invalid, this is the result of the ancient RSS parser not returning results. Most likely your feeds are valid. At this point the only way I have been able to get feeds to work is to create a proxy feed in [Google Feedburner[(https://feedburner.google.com/)-- instead of the demo feed of https://cogdogblog.com/ try https://feeds.feedburner.com/cogdogblog
+Most feeds will report error messages about it being invalid, this is the result of the ancient RSS parser not returning results. As of April 22, 2023 I am declaring it dead.
+
 
 I am sorry but making this code work is beyond my abilities.
 
