@@ -5,7 +5,7 @@
  * Snoopy - the PHP net client
  * Author: Monte Ohrt <monte@ohrt.com>
  * Copyright (c): 1999-2014, all rights reserved
- * Version: 2.00
+ * Version: 2.0.0
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -40,7 +40,7 @@ class Snoopy
     var $proxy_user = ""; // proxy user to use
     var $proxy_pass = ""; // proxy password to use
 
-    var $agent = "Snoopy v1.33-dev"; // agent we masquerade as
+    var $agent = "Snoopy v2.0.0"; // agent we masquerade as
     var $referer = ""; // referer info to pass
     var $cookies = array(); // array of cookies to pass
     // $cookies["username"]="joe";
@@ -628,8 +628,8 @@ class Snoopy
         $headers = $http_method . " " . $url . " " . $this->_httpversion . "\r\n";
         if (!empty($this->host) && !isset($this->rawheaders['Host'])) {
             $headers .= "Host: " . $this->host;
-//            if (!empty($this->port) && $this->port != '80')
-//                $headers .= ":" . $this->port;
+            if (!empty($this->port) && $this->port != '80')
+                $headers .= ":" . $this->port;
             $headers .= "\r\n";
         }
         if (!empty($this->agent))

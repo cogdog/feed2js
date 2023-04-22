@@ -151,7 +151,7 @@ if  (!$rss) {
 	$src = htmlspecialchars($src);
 	
 	// error, nothing grabbed
-	$str.= "<p class=\"rss-item\"><em>Error:</em> Feed failed! Causes may be (1) No data  found for RSS feed $src; (2) There are no items are available for this feed; (3) The RSS feed does not validate.<br /><br /> Please verify that the URL <a href=\"$src\">$src</a> works first in your browser and that the feed passes a <a href=\"http://feedvalidator.org/check.cgi?url=" . urlencode($src) . "\">validator test</a>.</p>\n";
+	$str.= "<p class=\"rss-item\"><em>Error:</em> Feed failed! Causes may be (1) No data  found for RSS feed $src; (2) There are no items are available for this feed; (3) The RSS feed does not validate.<br /><br /> Please verify that the URL <a href=\"$src\">$src</a> works first in your browser and that the feed passes a <a href=\"https://validator.w3.org/feed/check.cgi?url=?url=" . urlencode($src) . "\">validator test</a>.</p>\n";
 } else {
 
 		// we have a feed, so let's process

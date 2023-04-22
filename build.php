@@ -67,9 +67,8 @@ if ($generate) {
 	// URLs for a preview or a generated feed link
 	
 	// trap for missing src param for the feed, use a dummy one so it gets displayed.
-	if (!$src or
-	    (strpos($src, '//') !==0 and strpos($src, 'https://') !==0))
-		die('Feed URL missing, incomplete, or not valid. Must start with http:// or https:// and be a valid URL');
+	if ( empty($src) or (strpos($src, 'http') !==0)  )
+		die('Feed URL missing, incomplete, or not valid for ' . $src . '. Must start with http:// or https:// and be a valid URL');
 
 
 	// test for malicious use of script tages
@@ -79,7 +78,7 @@ if ($generate) {
 	}
 
 	
-		$my_dir = 'https://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']);
+		$my_dir = 'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']);
 		
 		$rss_str = "$my_dir/feed2js.php?src=" . urlencode($src) . $options . $html_options;
 
@@ -174,7 +173,7 @@ function query_str(form) {
 <p><strong>URL</strong> Enter the web address of the RSS Feed (must be in http:// or https:// format, not feed://)<br>
 
 <input type="text" name="src" size="50" value="<?php echo $src?>"> <br>
-<span style="font-size:x-small">Note: Please verify the URL of your feed (make sure it presents raw RSS) and <a href="http://feedvalidator.org/" onClick="window.open('http://feedvalidator.org/check.cgi?url=' + encodeURIComponent(document.builder.src.value), 'check'); return false;">check that it is valid</a>  before using this form.</span>
+<span style="font-size:x-small">Note: Please verify the URL of your feed (make sure it presents raw RSS) and <a href="http://feedvalidator.org/" onClick="window.open('https://validator.w3.org/feed/check.cgi?url=?url=' + encodeURIComponent(document.builder.src.value), 'check'); return false;">check that it is valid</a>  before using this form.</span>
 </p>
 
 <div id="badge" style="width:250px; padding:0;">
@@ -215,7 +214,7 @@ function query_str(form) {
 <p><strong>Target links in the new window?</strong> (n="no, links open the same page", y="yes, open links in a new window", "xxxx" = open links in a frame named 'xxxx', 'popup' = use a <a href="popup.js">JavaScript function</a> <code>popupfeed()</code> to open in new window) <br>
 <input type="text" name="targ" size="10" value="<?php echo $targ?>"></p>
 
-<p><strong>UTF-8 Character Encoding</strong><br>  Required for many non-western language web pages and also may help if you see strange characters replacing quotes in your output (see <a href="http://feed2js.org/index.php?s=help#chars">help pages</a> for more information).<br />
+<p><strong>UTF-8 Character Encoding</strong><br>  Required for many non-western language web pages and also may help if you see strange characters replacing quotes in your output.<br />
 <input type="checkbox" name="utf" value="y" <?php if ($utf=='y') echo 'checked="checked"'?> /> use UTF-8 character encoding
 </p>
 

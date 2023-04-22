@@ -1,12 +1,19 @@
 Feed2JS Code
 ============
-by Alan Levine http://cogdogblog.com/
+by Alan Levine https://cogdogblog.com/
 
-This directory contains the latest release of the Feed2JS source code. Until June 2013, this ran as a free public service at http://feed2js.org but the time has come to retire that and let people do this DIY style (here's the story http://cogdogblog.com/2013/04/01/crossroads-for-feed2js/). Feed2JS is provided as open-source under a GNU General Public License.
+
+This directory contains likely the last of Feed2JS source code. It's still running as a free public service at http://feed2js.org but it barely works and is not maintained. 
+
+Most feeds will report error messages about it being invalid, this is the result of the ancient RSS parser not returning results. Most likely your feeds are valid. At this point the only way I have been able to get feeds to work is to create a proxy feed in [Google Feedburner[(https://feedburner.google.com/)-- instead of the demo feed of https://cogdogblog.com/ try https://feeds.feedburner.com/cogdogblog
+
+I am sorry but making this code work is beyond my abilities.
 
 ABOUT
 -----
 This PHP script will take an RSS feed as a value of src="...." and return a JavaScript file that can be linked remotely from any other web page. Output includes site title, link, and description as well as item site, link, and description with these outouts contolled by extra parameters.
+
+It will not run inder PHP 8.
 
 CODE
 ----

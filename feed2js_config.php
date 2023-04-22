@@ -22,6 +22,10 @@
 
 define('MAGPIE_DIR',  './magpie/');
 
+// suggestion here https://bavotasan.com/2009/character-issues-with-the-magpie-rss-parser/
+define('MAGPIE_INPUT_ENCODING', 'UTF-8');
+define('MAGPIE_OUTPUT_ENCODING', 'UTF-8');
+
 // access magpie libraries
 require_once(MAGPIE_DIR.'rss_fetch.inc');
 require_once(MAGPIE_DIR.'rss_utils.inc');

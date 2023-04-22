@@ -2,6 +2,7 @@
 
 ini_set('display_errors', 1);
 ini_set('error_reporting', E_ALL);
+define('MAGPIE_INPUT_ENCODING', 'UTF-8');
 define('MAGPIE_OUTPUT_ENCODING', 'UTF-8');
 
 // set magpie root
@@ -15,6 +16,7 @@ define('MAGPIE_DEBUG', 1);
 
 // flush cache quickly for debugging purposes, don't do this on a live site
 define('MAGPIE_CACHE_AGE', 10);
+
 
 require_once(MAGPIE_DIR.'rss_fetch.inc');
 
