@@ -1,51 +1,64 @@
 <?php
 // access configuration settings
-require_once('feed2js_config.php');
-
+require_once('feed2js.config.php');
+require_once('Feed.inc.php');
 
 // Get variables from input 
-
 	
-$src = (isset($_GET['src'])) ? $_GET['src'] : '';
-$chan = (isset($_GET['chan'])) ? $_GET['chan'] : 'y';
-$num = (isset($_GET['num'])) ? $_GET['num'] : 0;
-$desc = (isset($_GET['desc'])) ? $_GET['desc'] : 1;
-$auth = (isset($_GET['au'])) ? 'y' : 'n';
-$date = (isset($_GET['date'])) ? $_GET['date'] : 'n';
-$tz = (isset($_GET['tz'])) ? $_GET['tz'] : 'feed';
-$targ = (isset($_GET['targ'])) ? $_GET['targ'] : 'n';
-$html = (isset($_GET['html'])) ? $_GET['html'] : 'n';
-$utf = (isset($_GET['utf'])) ? $_GET['utf'] : 'y';
+$src   = (isset($_GET['src']))  ? $_GET['src'] : '';
+$chan  = (isset($_GET['chan'])) ? $_GET['chan'] : 'y';
+$num   = (isset($_GET['num']))  ? $_GET['num'] : 0;
+$desc  = (isset($_GET['desc'])) ? $_GET['desc'] : 1;
+$auth  = (isset($_GET['au']))   ? 'y' : 'n';
+$date  = (isset($_GET['date'])) ? $_GET['date'] : 'n';
+$tz    = (isset($_GET['tz']))   ? $_GET['tz'] : 'feed';
+$targ  = (isset($_GET['targ'])) ? $_GET['targ'] : 'n';
+$html  = (isset($_GET['html'])) ? $_GET['html'] : 'n';
+$utf   = (isset($_GET['utf']))  ? $_GET['utf'] : 'y';
 $rss_box_id = (isset($_GET['rss_box_id'])) ? $_GET['rss_box_id'] : '';
-$pc = (isset($_GET['pc'])) ? $_GET['pc'] : 'n';
+$pc    = (isset($_GET['pc']))   ? $_GET['pc'] : 'n';
 
 
 // test for malicious use of script tages
-if (strpos($src, '<script>')) {
+if (strpos($src, '<script>'))
+{
 	$src = preg_replace("/(\<script)(.*?)(script>)/si", "SCRIPT DELETED", "$src");
 	die("Warning! Attempt to inject javascript detected. Aborted and tracking log updated.");
 }
 
 // trap for missing src param for the feed, use a dummy one so it gets displayed.
-if (!$src or (strpos($src, 'http://') !==0 and strpos($src, 'https://') !==0))
+if (!$src || (strpos($src, 'http://') !== 0 && strpos($src, 'https://') !== 0))
+{
 	die('Feed URL missing, incomplete, or not valid. Must start with http:// or https:// and be a valid URL');
+}
 
 // update to full descriptions for html turned on	
 if ($html=='a') $desc = 0;
 
 // build parameter string for the feed2js url
 $options = '';	
-if ($chan != 'n') $options .= "&chan=$chan";
-if ($num != 0) $options .= "&num=$num";
-if ($desc != 0) $options .= "&desc=$desc";
-if ($auth != 'n') $options .= "&au=$auth";
-if ($date != 'n') $options .= "&date=$date";
-if ($tz != 'feed') $options .= "&tz=$tz";
-if ($targ != 'n') $options .= "&targ=$targ";
-if ($html != 'n') $html_options = "&html=$html";
-if ($utf == 'y') $options .= '&utf=y';
-if ($rss_box_id != '') $options .= "&css=$rss_box_id";
-if ($pc == 'y') $options .= '&pc=y';
+if ($chan != 'n')
+    $options .= "&chan=$chan";
+if ($num  != 0)
+    $options .= "&num=$num";
+if ($desc != 0)
+    $options .= "&desc=$desc";
+if ($auth != 'n')
+    $options .= "&au=$auth";
+if ($date != 'n')
+    $options .= "&date=$date";
+if ($tz   != 'feed')
+    $options .= "&tz=$tz";
+if ($targ != 'n')
+    $options .= "&targ=$targ";
+if ($html != 'n')
+    $html_options = "&html=$html";
+if ($utf  == 'y')
+    $options .= '&utf=y';
+if ($rss_box_id != '')
+    $options .= "&css=$rss_box_id";
+if ($pc   == 'y')
+    $options .= '&pc=y';
 
 
 $rss_str = "feed2js.php?src=" . urlencode($src) . $options . $html_options;
@@ -58,44 +71,51 @@ $noscript_rss_str = "feed2js.php?src=" . urlencode($src) . $options .  '&html=y'
 <html lang="en">
 <head>
 	<?php 
-			if ($utf== 'y') {
-				echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">';
-			} else {
-				echo '<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">';
-			}
+	if ($utf== 'y')
+    {
+		echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">';
+	}
+    else
+    {
+		echo '<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">';
+	}
 	?>
 	<title>Feed Sneak Preview</title>
 	<link rel="stylesheet" href="style/basic1.css">
 
 	<style type="text/css">
-body {background-color:#fff; margin: 12px;}
-h1  { font-family: Verdana, Arial, Helvetica, sans-serif;
-margin-bottom:0;}     
-p, li { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 13px; color:#444; margin:0 0 1em;}
-</style>
+     body {background-color:#fff; margin: 12px;}
+     h1  { font-family: Verdana, Arial, Helvetica, sans-serif;
+         margin-bottom:0;}
+     p, li { font-family: Verdana, Arial, Helvetica, sans-serif;
+         font-size: 13px; color:#444; margin:0 0 1em;}
+    </style>
 
-<script src="popup.js" type="text/javascript" language="Javascript"></script>
+    <script src="popup.js" type="text/javascript" language="Javascript"></script>
 
 </head>
 <body>
 
-<div id="main">
-<h1>Look At Your Feed</h1>
-<p>Below is a preview of your feed using a basic style (learn how to customize this via the Feed2JS style pages). If this looks like the correct content and display, close this window and use the <strong>Generate JavaScript</strong> button to create your own web page code.</p>
+    <div id="main">
+        <h1>Look At Your Feed</h1>
+        <p>Below is a preview of your feed using a basic style (learn how to
+            customize this via the Feed2JS style pages). If this looks like the
+            correct content and display, close this window and use the
+            <strong>Generate JavaScript</strong> button to create your own web page code.</p>
 
-<script language="JavaScript" src="<?php echo $rss_str?>"></script>
-<noscript>
-<a href="<?php echo $noscript_rss_str?>">View Feed</a>
-</noscript>
+        <script language="JavaScript" src="<?php echo $rss_str?>"></script>
+        <noscript>
+            <a href="<?php echo $noscript_rss_str?>">View Feed</a>
+        </noscript>
 
-<div align="center">
-<form>
-<input type="button" value="Close Window" onClick="self.close()">
+        <div align="center">
+            <form>
+                <input type="button" value="Close Window" onClick="self.close()">
 
-</form>
-</div>
+            </form>
+        </div>
 
-</div>
+    </div>
 </body>
 </html>
 

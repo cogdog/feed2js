@@ -44,6 +44,7 @@
 
 // build parameter string for the feed2js url
 	$options = '';	
+	$html_options = '';	
 	if ($chan != 'n') $options .= "&chan=$chan";
 	if ($num != 0) $options .= "&num=$num";
 	if ($desc != 0) $options .= "&desc=$desc";
