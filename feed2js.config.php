@@ -1,41 +1,18 @@
 <?php
 /* Feed2JS : RSS feed to JavaScript Configuration include
 
-	Use this include to establish server specific paths
-	and other common functions used by the feed2js.php
-	
-	See main script for all the gory details or the code site
-	https://github.com/cogdog/feed2js
-	
-	
-*/
+   Use this include to establish server specific paths
+   and other common functions used by the feed2js.php
+   
+   See main script for all the gory details or the code site
+   https://github.com/cogdog/feed2js
+   
+   
+ */
 
 
-// MAGPIE SETUP ----------------------------------------------------
-// Define path to Magpie files and load library
-// The easiest setup is to put the 4 Magpie include
-// files in the same directory:
-// define('MAGPIE_DIR', './')
-
-// Otherwise, provide a full valid file path to the directory
-// where magpie sites
-
-define('MAGPIE_DIR',  './magpie/');
-
-// suggestion here https://bavotasan.com/2009/character-issues-with-the-magpie-rss-parser/
-define('MAGPIE_INPUT_ENCODING', 'UTF-8');
-define('MAGPIE_OUTPUT_ENCODING', 'UTF-8');
-
-// access magpie libraries
-require_once(MAGPIE_DIR.'rss_fetch.inc');
-require_once(MAGPIE_DIR.'rss_utils.inc');
-
-// value of 2 optionally show lots of debugging info but breaks JavaScript
-// This should be set to 0 unless debugging
-define('MAGPIE_DEBUG', 0);
-
-// Define cache age in seconds.
-define('MAGPIE_CACHE_AGE', 60*60);
+// Define cache age. uses PHP strtotime for flexibility
+define('CACHE_AGE', "1 hour");
 
 // OTHER SETTIINGS ----------------------------------------------
 // Output spec for item date string if used
@@ -46,7 +23,7 @@ $date_format = "F d, Y h:i:s a";
 // default timezone for your instance, can override server setting
 // see http://www.php.net/manual/en/timezones.php
 
-date_default_timezone_set('America/New_York');
+date_default_timezone_set('Europe/London');
 
 // server time zone offset from GMT
 // If this line generates errors (common on Windoze servers,
@@ -75,15 +52,14 @@ error_reporting(0);
 // comment out this line to activate url restriction
 unset($restrict_url);
 
-
 // Utility to remove return characters from strings that might
 // pollute JavaScript commands. While we are at it, substitute 
 // valid single quotes as well and get rid of any escaped quote
 // characters
-function strip_returns ($text, $linefeed=" ") {
+function strip_returns ($text, $linefeed=" ")
+{
 	$subquotes = trim( preg_replace( '/\s+/', ' ', $text ) );
 	return preg_replace("(\r\n|\n|\r)", $linefeed, $subquotes);
 }
-
 
 ?>
