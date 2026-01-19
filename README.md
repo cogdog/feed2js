@@ -10,6 +10,8 @@ Most feeds will report error messages about it being invalid, this is the result
 
 I am sorry but making this code work is beyond my abilities.
 
+* **Update Oct 2025:** Maybe not dead, [a contributor has made under the hood changes to swap in a new parser](https://github.com/cogdog/feed2js/pull/35), and Feed2JS appears to maybe be workable. I have to do some more ecploring. But never say "dead"! 
+
 ABOUT
 -----
 This PHP script will take an RSS feed as a value of src="...." and return a JavaScript file that can be linked remotely from any other web page. Output includes site title, link, and description as well as item site, link, and description with these outouts contolled by extra parameters.
